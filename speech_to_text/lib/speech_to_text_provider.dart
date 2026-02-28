@@ -142,7 +142,7 @@ class SpeechToTextProvider extends ChangeNotifier {
     final options = SpeechListenOptions(
         partialResults: partialResults,
         onDevice: onDevice,
-        cancelOnError: true,
+        cancelOnError: false,
         listenMode: listenMode);
     if (soundLevel) {
       _speechToText.listen(

@@ -564,10 +564,19 @@ class SpeechToText {
     var listenFor = _listenFor;
     var pauseFor = _pauseFor;
     if (null != listenFor && _elapsedListenMillis >= listenFor.inMilliseconds) {
-      _stop();
+      if (_recognized){
+        _stop();
+      } else{
+        _setupListenAndPause(_pauseFor, _listenFor);
+      }
     } else if (null != pauseFor &&
         _elapsedSinceSpeechEvent >= pauseFor.inMilliseconds) {
-      _stop();
+      // _stop();
+      if (_recognized){
+        _stop();
+      } else{
+        _setupListenAndPause(_pauseFor, _listenFor);
+      }
     } else {
       _setupListenAndPause(_pauseFor, _listenFor);
     }
@@ -700,6 +709,7 @@ class SpeechToText {
       errorListener!(speechError);
     }
     if (_cancelOnError && speechError.permanent) {
+      // print('cancel on error ${speechError}');
       await _cancel();
     }
   }
